@@ -22,19 +22,15 @@ end
 group :test do
   gem 'rspec-rails',      ">= 2.0.0.beta"
   gem 'webrat', '0.7.1'
+  gem 'autotest', '4.4.6'
+  gem 'autotest-rails-pure', '4.1.2'
+  gem 'autotest-fsevent', '0.2.4'
+  gem 'autotest-growl', '0.2.16'
 end
 
 #group :development do
 #  gem 'rspec-rails', '2.6.1'
 #end
-
-
-
-#group :test do
-#  gem 'rspec-rails', '2.6.1'
-#  gem 'webrat', '0.7.1'
-#end
-
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
