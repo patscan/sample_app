@@ -293,8 +293,15 @@ describe UsersController do
 		describe "as an admin user" do
 		
 			before(:each) do
-				admin = Factory(:user, :email => "admins@example.com", :admin => true)
-				test_sign_in(admin)
+				@admin = Factory(:user, :email => "admins@example.com", :admin => true)
+				test_sign_in(@admin)
+			end
+			
+			it "should not be possible to delete oneself" do
+				lambda do
+					delete :destroy, :id => @admin
+					response.should redirect_to(users_path)
+				end.should_not change(User, :count)
 			end
 			
 			it "should destroy the user" do
