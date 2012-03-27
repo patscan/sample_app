@@ -60,5 +60,25 @@ describe "Users" do
      end
     end
   end
-          
+  
+  describe "admin access to delete" do
+  
+    describe "non admins" do
+      it "should not display a delete link" do
+      user = Factory(:user)
+      integration_sign_in(user)
+      click_link "Users"
+      response.should_not have_selector("a", :content => "delete")
+      end
+    end
+    
+    describe "admins" do
+      it "should display a delete link" do
+      admin = Factory(:user, :email => "admins@example.com", :admin => true)
+      integration_sign_in(admin)
+      click_link "Users"
+      response.should have_selector("a", :content => "delete")
+      end
+    end
+  end
 end

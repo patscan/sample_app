@@ -9,19 +9,29 @@ class UsersController < ApplicationController
   end
   
   def new
-    @user = User.new
-  	@title = "Sign up"
+    if signed_in?
+      flash[:info] = "You are already signed in."
+      redirect_to root_path
+    else
+      @user = User.new
+  	  @title = "Sign up"
+  	end
   end
   
   def create
-    @user = User.new(params[:user])
-    if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user      
+    if signed_in?
+      flash[:info] = "You are already signed in."
+      redirect_to root_path
     else
-      @title = "Sign up"
-      render 'new'
+      @user = User.new(params[:user])
+      if @user.save
+        sign_in @user
+        flash[:success] = "Welcome to the Sample App!"
+        redirect_to @user      
+      else
+        @title = "Sign up"
+        render 'new'
+      end
     end
   end
   
@@ -42,11 +52,6 @@ class UsersController < ApplicationController
   def index
     @title = "All users"
     @users = User.paginate(:page => params[:page])  
-  end
-  
-  def show
-    @user = User.find(params[:id])
-    @title = @user.name
   end
   
   def destroy

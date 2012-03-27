@@ -293,7 +293,7 @@ describe UsersController do
 		describe "as an admin user" do
 		
 			before(:each) do
-				admin = Factory(:user, :email => "admin@example.com", :admin => true)
+				admin = Factory(:user, :email => "admins@example.com", :admin => true)
 				test_sign_in(admin)
 			end
 			
