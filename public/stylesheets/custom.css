@@ -127,7 +127,7 @@ td.main {
 
 td.sidebar {
   width: 30%;
-  padding: 1em;
+  padding: .8em;
   vertical-align: top;
   background: #ffc;
 }
@@ -195,7 +195,9 @@ ul.users {
   list-style: none;
 }
 
-/* microposts styling */
+/* microposts styling - table method. REVERT TO THIS IF LAYOUT BREAKS */
+
+/*
 h1.micropost {
   margin-bottom: 0.3em;
 }
@@ -231,6 +233,97 @@ td.micropost span.timestamp {
   font-size: 85%;
   color: #666;
 }
+*/
+
+/* micropost styling -- unordered list method */
+
+h1.micropost {
+  margin-bottom: 0.3em;
+}
+
+form.new_micropost textarea {
+  background-color: #F8F8F8;
+	font-family: "Helvetica", arial, sans-serif;
+	font-size: 95%
+	margin-bottom: 0em;
+	resize: none;
+}
+
+#micropost_submit {
+  margin-top: .5em;
+  font-size: 89%;
+  border: 1px solid #006;
+  background: #9cf;
+}
+
+
+#char_counter {
+  margin-top: -7px;
+  color: #484848;
+}
+
+#char_counter span#char-count{
+  font-weight: bold;
+}
+
+ul.micropost {
+  margin-top: 1em;
+  margin-left: 0em;
+  padding-left: 0em;
+  list-style: none;
+}
+
+ul.micropost li {
+  border-top: 1px solid #ccc;
+  min-height:70px;
+}
+
+ul.micropost div.micropost_container {
+  padding-top: .3em;
+}
+
+ul.micropost div.micropost {
+  width: 370px;
+  position: relative;
+  margin-left: 60px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+ul.micropost div.gravatar {
+  height: 100%;
+  float: left;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+ul.micropost div.gravatar a{
+  height: 100%;
+  vertical-align: middle;
+  margin-top: .5em;
+}
+
+ul.micropost span.timestamp {
+  display: block;
+  font-size: 75%;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+ul.micropost span.content {
+  font-size: 95%;
+  margin-top: 1em;
+}
+
+
+ul.micropost div.delete {
+  
+  vertical-align: middle;
+  padding-top: 0px;
+  float: right;
+}
+
+/**/
+
 
 div.user_info img {
   padding-right: 0.1em;

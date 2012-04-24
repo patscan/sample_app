@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe UsersController do
   render_views
+ 			
   
   describe "GET 'index'" do
   
@@ -324,9 +325,44 @@ describe UsersController do
 			end
 		end
 	end
+	
+	describe "pagination display" do
+    
+    it "should display micropost pagination correctly" do
+    	@user = test_sign_in(Factory(:user))
+      
+      51.times do
+				mp = Factory(:micropost, :user => @user, :content => "foo bar")
+      end
+      
+      get :show, :id => @user
+      response.should have_selector("div.pagination")
+      response.should have_selector("span.disabled", :content => "Previous")
+      response.should have_selector("a", :href => "/users/1?page=2",
+                                         :content => "2")
+      response.should have_selector("a", :href => "/users/1?page=2",
+                                         :content => "Next")
+		end         
+	end
+	
+	describe "micropost deletion protection" do
 		
+		it "should prevent the deletion of another's microposts" do
+			@user = Factory(:user)
+			@wrong_user = Factory(:user, :email => "joe@example.net")
+			
+			51.times do
+				mp = Factory(:micropost, :user => @user, :content => "foo bar")
+      end
+      
+      test_sign_in(@wrong_user)
+      get :show, :id => @user
+      response.should_not have_selector("a", :id => "delete")
+    end
+  end
 	
 end
+
 
 		
 			

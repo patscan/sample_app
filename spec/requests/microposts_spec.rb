@@ -33,9 +33,31 @@ describe "Microposts" do
           visit root_path
           fill_in :micropost_content, :with => content
           click_button
-          response.should have_selector("span.content", :content => content)
+          response.should have_selector("span.content", :content => content)    
         end.should change(Micropost, :count).by(1)
       end
     end
   end
+  
+  describe "correct micropost count and pluralization on home" do
+  
+    it "should display the count correctly" do
+      content = "Lorem ipsum dolor sit amet"
+      lambda do
+        visit root_path
+        response.should have_selector("td", :content => "0 microposts")
+        fill_in :micropost_content, :with => content
+        click_button
+        response.should have_selector("td", :content => "1 micropost")
+        fill_in :micropost_content, :with => content
+        click_button
+        response.should have_selector("td", :content => "2 microposts")
+      end
+    end
+  end
+  
+  
+  
+    
+ 
 end
