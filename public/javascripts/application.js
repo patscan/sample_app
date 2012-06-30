@@ -9,5 +9,3 @@ $("#micropost_content").on('keyup keydown', function() {
   $('#char-count').html(left);
   });
 });
-
-
