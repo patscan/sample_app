@@ -1,11 +1,18 @@
 require 'spec_helper'
 
 describe Relationship do
+<<<<<<< HEAD
   
   before(:each) do
     @follower = Factory(:user)
     @followed = Factory(:user, :email => Factory.next(:email))
     
+=======
+
+  before(:each) do
+    @follower = Factory(:user)
+    @followed = Factory(:user, :email => Factory.next(:email))
+>>>>>>> status-feed
     @relationship = @follower.relationships.build(:followed_id => @followed.id)
   end
   
@@ -13,7 +20,11 @@ describe Relationship do
     @relationship.save!
   end
   
+<<<<<<< HEAD
   describe "follower methods" do
+=======
+  describe "follow methods" do
+>>>>>>> status-feed
   
     before(:each) do
       @relationship.save

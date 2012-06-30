@@ -212,7 +212,11 @@ describe User do
       @followed = Factory(:user)
     end
     
+<<<<<<< HEAD
     it "should have a relationship method" do
+=======
+    it "should have a relationships method" do
+>>>>>>> status-feed
       @user.should respond_to(:relationships)
     end
     
@@ -236,9 +240,15 @@ describe User do
     it "should include the followed user in the following array" do
       @user.follow!(@followed)
       @user.following.should include(@followed)
+<<<<<<< HEAD
     end
     
     it "should have an unfollow! method" do
+=======
+    end 
+    
+    it "should have an unfollow method" do
+>>>>>>> status-feed
       @followed.should respond_to(:unfollow!)
     end
     
@@ -256,10 +266,18 @@ describe User do
       @user.should respond_to(:followers)
     end
     
+<<<<<<< HEAD
     it "should include the follower in the followers array" do
       @user.follow!(@followed)
       @followed.followers.should include(@user)
     end
   end  
+=======
+    it "should inculde the follower in the followers array" do
+      @user.follow!(@followed)
+      @followed.followers.should include(@user)
+    end
+  end
+>>>>>>> status-feed
 end
 
