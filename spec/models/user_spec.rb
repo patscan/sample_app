@@ -271,7 +271,7 @@ describe User do
     it "should delete relationship when user is deleted" do
       @user.follow!(@followed)
       @user.destroy
-      Relationship.find_by_followed_id(@followed).should be_nil      
+      Relationship.find_by_followed_id(@followed).should be_nil
     end
   end
 end
