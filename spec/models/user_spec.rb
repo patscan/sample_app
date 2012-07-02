@@ -193,14 +193,21 @@ describe User do
       end
       
       it "should include the user's microposts" do
-        @user.feed.include?(@mp1).should be_true
-        @user.feed.include?(@mp2).should be_true
+        @user.feed.should include(@mp1)
+        @user.feed.should include(@mp2)
       end
       
       it "should not include a different user's microposts" do
         mp3 = Factory(:micropost,
                       :user => Factory(:user, :email => Factory.next(:email)))
-        @user.feed.include?(mp3).should be_false
+        @user.feed.should_not include(@mp3)
+      end
+      
+      it "should include the microposts of followed users" do
+        followed = Factory(:user, :email => Factory.next(:email))
+        mp3 = Factory(:micropost, :user => followed)
+        @user.follow!(followed)
+        @user.feed.should include(mp3)
       end
     end
   end
@@ -212,11 +219,7 @@ describe User do
       @followed = Factory(:user)
     end
     
-<<<<<<< HEAD
-    it "should have a relationship method" do
-=======
     it "should have a relationships method" do
->>>>>>> status-feed
       @user.should respond_to(:relationships)
     end
     
@@ -240,15 +243,9 @@ describe User do
     it "should include the followed user in the following array" do
       @user.follow!(@followed)
       @user.following.should include(@followed)
-<<<<<<< HEAD
-    end
-    
-    it "should have an unfollow! method" do
-=======
     end 
     
     it "should have an unfollow method" do
->>>>>>> status-feed
       @followed.should respond_to(:unfollow!)
     end
     
@@ -266,18 +263,16 @@ describe User do
       @user.should respond_to(:followers)
     end
     
-<<<<<<< HEAD
-    it "should include the follower in the followers array" do
-      @user.follow!(@followed)
-      @followed.followers.should include(@user)
-    end
-  end  
-=======
     it "should inculde the follower in the followers array" do
       @user.follow!(@followed)
       @followed.followers.should include(@user)
     end
+    
+    it "should delete relationship when user is deleted" do
+      @user.follow!(@followed)
+      @user.destroy
+      Relationship.find_by_followed_id(@followed).should be_nil      
+    end
   end
->>>>>>> status-feed
 end
 
