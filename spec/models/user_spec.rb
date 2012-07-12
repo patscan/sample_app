@@ -18,7 +18,8 @@ describe User do
       :name => "Example User", 
       :email => "user@example.com",
       :password => "foobar",
-      :password_confirmation => "foobar"
+      :password_confirmation => "foobar",
+      :username => "SF_User"
     }
   end
   
@@ -70,6 +71,11 @@ describe User do
     User.create!(@attr.merge(:email => upcased_email))
     user_with_duplicate_email = User.new(@attr)
     user_with_duplicate_email.should_not be_valid
+  end
+  
+  it "should reject long usernames" do
+    long_username_user = User.new(@attr.merge(:username => "ThisIsAReallyLongUserNameRight"))
+    long_username_user should_not be_valid    
   end
   
   describe "password validations" do
