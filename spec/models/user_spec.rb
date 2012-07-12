@@ -96,7 +96,13 @@ describe User do
     username_biter.should_not be_valid
   end
   
-  
+  it "should reject invalid usernames" do
+    bad_usernames = %w[%man ..money.. ":?"]
+    bad_usernames.each do |bad_username|
+      invalid_username_user = User.create(@attr.merge(:username => bad_username))
+      invalid_username_user.should_not be_valid
+    end
+  end
   
   describe "password validations" do
     
