@@ -83,9 +83,16 @@ describe User do
     long_username_user.should_not be_valid    
   end
   
-  it "should reject duplicate usernames, including case" do
+  it "should reject duplicate usernames" do
     User.create!(@attr)
-    username_biter = User.new(@attr.merge(:email => "joe@joe.com", :username => "sf_user"))
+    dupe_username_user = User.new(@attr.merge(:email => "bob@bob.com"))
+    dupe_username_user.should_not be_valid
+  end
+  
+  it "should reject duplicate usernames, including case" do
+    upcased_username = @attr[:username].upcase
+    User.create!(@attr)
+    username_biter = User.new(@attr.merge(:email => "joe@joe.com", :username => upcased_username))
     username_biter.should_not be_valid
   end
   
