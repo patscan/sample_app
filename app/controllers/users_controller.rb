@@ -15,8 +15,8 @@ class UsersController < ApplicationController
       redirect_to root_path
     else
       @user = User.new
-  	  @title = "Sign up"
-  	end
+      @title = "Sign up"
+    end
   end
   
   def create
