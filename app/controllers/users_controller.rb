@@ -83,7 +83,6 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
   
-  
   private 
     
     def correct_user
@@ -94,4 +93,6 @@ class UsersController < ApplicationController
     def admin_user
       redirect_to(root_path) unless current_user.admin?
     end
+    
+    
 end
