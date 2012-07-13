@@ -138,7 +138,8 @@ describe UsersController do
 
       before(:each) do
 	@attr = { :name => "New User", :email => "user@example.com",
-		  :password => "foobar", :password_confirmation => "foobar" }
+		  :password => "foobar", :password_confirmation => "foobar",
+		  :username => "scanlan_rocks" }
       end
   
       it "should create a user" do

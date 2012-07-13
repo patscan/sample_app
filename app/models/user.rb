@@ -14,7 +14,7 @@ require 'digest'
 class User < ActiveRecord::Base
 
   attr_accessor :password
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, :username
   
   has_many :microposts, :dependent => :destroy
   has_many :relationships, :foreign_key => "follower_id",
@@ -36,11 +36,13 @@ class User < ActiveRecord::Base
                                    
   has_many :followers, :through => :reverse_relationships, :source => :follower
                                    
-  
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  
+  username_regex = /\A(\w+)\z/
   
   validates :name,  :presence   => true,
                     :length     => { :maximum => 50 }
+                    
   validates :email, :presence   => true,
                     :format     => { :with => email_regex },
                     :uniqueness => { :case_sensitive => false }
@@ -48,7 +50,10 @@ class User < ActiveRecord::Base
   # Automatically create the virtual attribute 'password_confirmation'
   validates :password, :presence     => true,
                        :confirmation => true,
-                       :length       => { :within => 6..40 } 
+                       :length       => { :within => 6..40 }
+  
+  validates :username, :length => { :maximum => 15 },
+                       :format => { :with => username_regex }
                        
   before_save :encrypt_password
   
