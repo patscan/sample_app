@@ -18,12 +18,15 @@ describe UsersController do
   	
       before(:each) do
 	@user = test_sign_in(Factory(:user))
-	second = Factory(:user, :name => "Bob", :email => "another@example.com")
-	third  = Factory(:user, :name => "Ben", :email => "another@example.net")								 
+	second = Factory(:user, :name => "Bob", :email => "another@example.com",
+						:username => "bobtheuser")
+	third  = Factory(:user, :name => "Ben", :email => "another@example.net",
+						:username => "bentheuser")								 
 	@users = [@user, second, third]
 	30.times do
-	  @users << Factory(:user, :name => Factory.next(:name),
-			    :email => Factory.next(:email))
+	  @users << Factory(:user, :name     => Factory.next(:name),
+				   :email    => Factory.next(:email),
+				   :username => Factory.next(:username))
 	end
       end
 			
@@ -263,7 +266,7 @@ describe UsersController do
     describe "for signed-in users" do
     
       before(:each) do
-	wrong_user = Factory(:user, :email=> "user@example.net")
+	wrong_user = Factory(:user, :email=> "user@example.net", :username => "wrong")
 	test_sign_in(wrong_user)
       end
       
@@ -303,7 +306,9 @@ describe UsersController do
     describe "as an admin user" do
     
       before(:each) do
-	@admin = Factory(:user, :email => "admins@example.com", :admin => true)
+	@admin = Factory(:user, :email => "admins@example.com",
+				:username => "admin1",
+				:admin => true)
 	test_sign_in(@admin)
       end
       
@@ -350,7 +355,7 @@ describe UsersController do
 	      
     it "should prevent the deletion of another's microposts" do
       @user = Factory(:user)
-      @wrong_user = Factory(:user, :email => "joe@example.net")
+      @wrong_user = Factory(:user, :email => "joe@example.net", :username => "u2fan")
 
       51.times do
 	mp = Factory(:micropost, :user => @user, :content => "foo bar")
@@ -380,7 +385,8 @@ describe UsersController do
       
       before(:each) do
 	@user = test_sign_in(Factory(:user))
-	@other_user = Factory(:user, :email => Factory.next(:email))
+	@other_user = Factory(:user, :email => Factory.next(:email),
+				     :username => Factory.next(:username))
 	@user.follow!(@other_user)
       end
       

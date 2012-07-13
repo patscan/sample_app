@@ -53,7 +53,8 @@ class User < ActiveRecord::Base
                        :length       => { :within => 6..40 }
   
   validates :username, :length => { :maximum => 15 },
-                       :format => { :with => username_regex }
+                       :format => { :with => username_regex },
+                       :uniqueness => { :case_sensitive => false }
                        
   before_save :encrypt_password
   
