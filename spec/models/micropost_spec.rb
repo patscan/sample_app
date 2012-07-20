@@ -69,7 +69,7 @@ describe Micropost do
       @user.follow!(@other_user)
     end
     
-    it "shoud have a from_users_followed_by class method" do
+    it "should have a from_users_followed_by scope" do
       Micropost.should respond_to(:from_users_followed_by)
     end
     
@@ -87,6 +87,28 @@ describe Micropost do
     
   end
   
+  describe "replies" do
+    before(:each) do
+      @other_user = Factory(:user, :email => Factory.next(:email),
+                            :username => Factory.next(:username))
+      @third_user = Factory(:user, :email => Factory.next(:email),
+                            :username => Factory.next(:username))
+      
+      @user_reply  = @user.microposts.create!(:content => "@#{@other_user.username} foo")      
+    end
+    
+    it "should have an including_replies scope" do
+      Micropost.should respond_to(:including_replies)     
+    end
+    
+    it "should show up in the replied to user's feed" do
+      Micropost.including_replies(@other_user).should include(@user_reply)
+    end
+  
+    it "should not show up in the feed of a third party" do
+      Micropost.including_replies(@third_user).should_not include(@user_reply)
+    end
+  end
 end
 
 

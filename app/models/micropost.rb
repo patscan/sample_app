@@ -11,6 +11,9 @@ class Micropost < ActiveRecord::Base
   # Return microposts from the users being followed by the given user
   scope :from_users_followed_by, lambda { |user| followed_by(user) }
   
+  # Return microposts addressed to the user
+  # scope :including_replies
+  
   private
   
   # Return an SQL condition for users followed by the given user.
@@ -22,4 +25,13 @@ class Micropost < ActiveRecord::Base
     where("user_id IN (#{following_ids}) OR user_id = :user_id",
           { :user_id => user })
   end
+
+  # This might involve adding an in_reply_to column in
+  # the microposts table and an extra including_replies
+  # scope to the Micropost model.
+  
+  
+  
+  
 end
+

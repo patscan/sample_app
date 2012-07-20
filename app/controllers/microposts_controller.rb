@@ -10,6 +10,7 @@ class MicropostsController < ApplicationController
   
   def create
     @micropost = current_user.microposts.build(params[:micropost])
+   
     if @micropost.save
       flash[:success] = "Micropost created!"
       redirect_to root_path
@@ -25,10 +26,33 @@ class MicropostsController < ApplicationController
     redirect_back_or root_path
   end
   
+
+  
   private
   
     def authorized_user
       @micropost = current_user.microposts.find_by_id(params[:id])
       redirect_to root_path if @micropost.nil?
-    end  
+    end
+    
+          
+    def reply_to_user?(content)
+      reply_to_regex = /^\A[\@][\w]{1,15}\b/  #traps @123456789012345
+      reply_to_user = reply_to_regex[1..-1]   #traps 123456789012345
+      reply_to_user_id = User.find_by_username(reply_to_user)
+      
+      content =~ reply_to_regex
+        
+    end
 end
+      # reply_to_user_id = User.find_by_username(reply_to_user)   
+      
+      # if @micropost =~ reply_to_regex
+      #    @micropost.in_reply_to = reply_to_user_id
+      # end
+    
+    # def in_reply_to?(micropost)
+    #  reply_to_regex = /^\A[\@][\w]{1,15}\b/
+    #  
+    #  @micropost =~ reply_to_regex
+    # end
