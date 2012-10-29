@@ -12,6 +12,7 @@ class MicropostsController < ApplicationController
     @micropost = current_user.microposts.build(params[:micropost])
    
     if @micropost.save
+      route_to_user
       flash[:success] = "Micropost created!"
       redirect_to root_path
     else
@@ -36,23 +37,15 @@ class MicropostsController < ApplicationController
     end
     
           
-    def reply_to_user?(content)
+    def route_to_user
       reply_to_regex = /^\A[\@][\w]{1,15}\b/  #traps @123456789012345
-      reply_to_user = reply_to_regex[1..-1]   #traps 123456789012345
-      reply_to_user_id = User.find_by_username(reply_to_user)
-      
-      content =~ reply_to_regex
-        
+      reply_to_user = /^\A[\@][\w]{1,15}\z\b/   #traps 123456789012345
+      if self =~ reply_to_regex
+        # reply_to_user = self[1..-1]
+        # add the addressed_to user's id to the in_reply_to column of this object
+        # update_attributes(params[:user])
+        addressed_to = User.find_by_username(reply_to_user).id
+        self.in_reply_to = addressed_to
+      end
     end
 end
-      # reply_to_user_id = User.find_by_username(reply_to_user)   
-      
-      # if @micropost =~ reply_to_regex
-      #    @micropost.in_reply_to = reply_to_user_id
-      # end
-    
-    # def in_reply_to?(micropost)
-    #  reply_to_regex = /^\A[\@][\w]{1,15}\b/
-    #  
-    #  @micropost =~ reply_to_regex
-    # end
